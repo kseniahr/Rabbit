@@ -14,11 +14,13 @@ public class LevelController : MonoBehaviour {
 
 	public void SetStartingPosition (Vector3 pos){
 		this.start_position = pos;
-	
+
 	}
 
 
 	public void RabitOnDeath(MyRabit rabit) {
+
+
 		rabit.transform.position = this.start_position;
 	}
 

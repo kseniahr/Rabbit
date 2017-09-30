@@ -46,9 +46,16 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Scripts\Bomb.cs" />
+     <Compile Include="Assets\Scripts\Coins.cs" />
+     <Compile Include="Assets\Scripts\Collectable.cs" />
+     <Compile Include="Assets\Scripts\Crystal.cs" />
      <Compile Include="Assets\Scripts\DeathHere.cs" />
+     <Compile Include="Assets\Scripts\Fruit.cs" />
      <Compile Include="Assets\Scripts\HeroFollow.cs" />
      <Compile Include="Assets\Scripts\LevelController.cs" />
+     <Compile Include="Assets\Scripts\MovingPlatform.cs" />
+     <Compile Include="Assets\Scripts\Mushroom.cs" />
      <Compile Include="Assets\Scripts\MyRabit.cs" />
      <Compile Include="Assets\Scripts\ParallaxLayer.cs" />
  <Reference Include="UnityEngine.UI">

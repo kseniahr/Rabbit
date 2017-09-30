@@ -10,10 +10,11 @@ public class MyRabit : MonoBehaviour {
 	float JumpTime = 0f;
 	public float MaxJumpTime = 2f;
 	public float JumpSpeed = 3f;
-
+	Transform heroParent = null;
 
 	// Use this for initialization
 	void Start () {
+		this.heroParent = this.transform.parent;
 		LevelController.current.SetStartingPosition (transform.position);
 		myBody = this.GetComponent<Rigidbody2D>();
 	}
@@ -22,6 +23,15 @@ public class MyRabit : MonoBehaviour {
 	void Update () {
 		Jump ();
 		
+	}
+	static void SetNewParent(Transform obj, Transform new_parent){
+		if (obj.transform.parent != new_parent) {
+			Vector3 pos = obj.transform.position;
+			obj.transform.parent = new_parent;
+			obj.transform.position = pos;
+		}
+
+
 	}
 
 	public void Jump() {
@@ -36,6 +46,11 @@ public class MyRabit : MonoBehaviour {
 
 		if (hit) {
 			isGrounded = true;
+			if (hit.transform.GetComponent<MovingPlatform> () != null) {
+				SetNewParent (this.transform, hit.transform);
+			} else {
+				SetNewParent (this.transform, this.heroParent);
+			}
 		} else {
 			isGrounded = false;
 		}
@@ -61,8 +76,6 @@ public class MyRabit : MonoBehaviour {
 				while (i < 2) {
 					i = i + 1;
 					this.JumpTime += Time.deltaTime;
-
-				}
 					if (this.JumpTime < this.MaxJumpTime) {
 						Vector2 vel = myBody.velocity;
 						vel.y = JumpSpeed * (1.0f - JumpTime / MaxJumpTime);
@@ -72,6 +85,9 @@ public class MyRabit : MonoBehaviour {
 						this.JumpActive = false;
 						this.JumpTime = 0;
 					}
+
+				}
+					
 				}
 
 
