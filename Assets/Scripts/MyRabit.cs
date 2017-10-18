@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class MyRabit : MonoBehaviour {
+
+// стрибки, зупинка платформи
+	public static MyRabit lastRabit;
+
 	public float speed = 1;
 	Rigidbody2D myBody = null;
 	bool isGrounded = true;
@@ -11,12 +15,23 @@ public class MyRabit : MonoBehaviour {
 	public float MaxJumpTime = 2f;
 	public float JumpSpeed = 3f;
 	Transform heroParent = null;
+	Animator myanim;
+	public LayerMask playerMask;
 
+	public float hurtTime = 2;
+
+
+	void Awake (){
+
+		lastRabit = this;
+
+	}
 	// Use this for initialization
 	void Start () {
 		this.heroParent = this.transform.parent;
 		LevelController.current.SetStartingPosition (transform.position);
 		myBody = this.GetComponent<Rigidbody2D>();
+		myanim = this.GetComponent<Animator> ();
 	}
 	
 	// Update is called once per frame
@@ -35,7 +50,7 @@ public class MyRabit : MonoBehaviour {
 	}
 
 	public void Jump() {
-		Animator animator = GetComponent<Animator> ();
+		
 		Vector3 from = transform.position + Vector3.up * 0.3f;
 		Vector3 to = transform.position + Vector3.down * 0.1f;
 		int layer_id = 1 << LayerMask.NameToLayer ("Ground");
@@ -56,9 +71,9 @@ public class MyRabit : MonoBehaviour {
 		}
 
 		if (this.isGrounded) {
-			animator.SetBool ("jump", false);
+			myanim.SetBool ("jump", false);
 		} else
-			animator.SetBool ("jump", true);
+			myanim.SetBool ("jump", true);
 		 
 
 		if (Input.GetButtonDown("Jump") && isGrounded) {
@@ -90,33 +105,127 @@ public class MyRabit : MonoBehaviour {
 					
 				}
 
-
-
-
-
-		}
-
-
-
-		 
+		} 
 
 	}
-	void FixedUpdate ()
-	{
-		Animator animator = GetComponent<Animator> ();
-		float value = Input.GetAxis ("Horizontal");
-		SpriteRenderer sr = GetComponent<SpriteRenderer> ();
+	void Die(){
+		
+		myanim.SetTrigger ("die");
+
+
+		myBody.isKinematic = true;
+		this.GetComponent<BoxCollider2D>().enabled = true;
+
+
+		StartCoroutine (hideMeLater());
+
+
+
+	}
+
+	IEnumerator hideMeLater(){
+
+		yield return new WaitForSeconds (2);
+		Application.LoadLevel (Application.loadedLevel);
+	}
+
+
+
+
+
+
+
+
+
+
+
+		/* Animator myanimator = GetComponent<Animator> ();
+
+		myanimator.SetBool("die",true);
+		myBody.velocity = Vector2.zero;
+		LevelController.current.RabitOnDeath(this); 
+
+*/
+
+
 
 	
 
+	void OnCollisionEnter2D (Collision2D collision){
+
+		if (collision.collider.tag == "weapon") {
+			Die ();
+		}
+
+		if (collision.gameObject.tag == "Orc1") {
+			GreenOrc gr_enemy = collision.collider.GetComponent<GreenOrc> ();
+			Animator an1 = gr_enemy.GetComponent<Animator> ();
+			if (gr_enemy != null) {
+
+				float orc_y = collision.transform.position.y;
+
+				float rabit_y = this.transform.position.y;
+
+				if (orc_y < rabit_y && rabit_y - orc_y > 0.5f) {
+					Debug.Log ("Orc is Dead");
+					an1.SetTrigger ("orc_die");
+					gr_enemy.Die ();
+
+				} else {
+
+
+					an1.SetTrigger ("attack");
+					Die ();
+
+
+				}
+			}
+		}
+
+
+		if (collision.gameObject.tag == "Orc2") {
+			BrownOrc br_enemy = collision.collider.GetComponent<BrownOrc> ();
+			Animator an2 = br_enemy.GetComponent<Animator> ();
+			if (br_enemy != null) {
+
+				float orc_y = collision.transform.position.y;
+
+				float rabit_y = this.transform.position.y;
+
+				if (orc_y < rabit_y && rabit_y - orc_y > 0.5f) {
+					Debug.Log ("Orc is Dead");
+					an2.SetTrigger ("die");
+					br_enemy.Die ();
+
+				} else {
+
+
+					an2.SetTrigger ("attack2");
+					Die ();
+
+
+				}
+			}
+		}
+
+	}
+
+		
+	void FixedUpdate (){
+		
+		float value = Input.GetAxis ("Horizontal");
+		SpriteRenderer sr = GetComponent<SpriteRenderer> ();
+		Animator animatorrab = GetComponent<Animator> ();
+	
+
 		if (Mathf.Abs (value) > 0) {
-			animator.SetBool("run", true);
+			animatorrab.SetBool("run", true);
 			Vector2 vel = myBody.velocity;
 			vel.x = value * speed;
 			myBody.velocity = vel;
 		}
 		if (Mathf.Abs (value) == 0) {
-			animator.SetBool ("run", false);
+			animatorrab.SetBool ("run", false);
 		}
 		if (value < 0) {
 			sr.flipX = true;
@@ -125,3 +234,7 @@ public class MyRabit : MonoBehaviour {
 		}
 	}	
 }
+
+
+
+

@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class LevelController : MonoBehaviour {
+	
 	public static LevelController current;
+
 	Vector3 start_position;
 
 
@@ -19,8 +21,6 @@ public class LevelController : MonoBehaviour {
 
 
 	public void RabitOnDeath(MyRabit rabit) {
-
-
 		rabit.transform.position = this.start_position;
 	}
 

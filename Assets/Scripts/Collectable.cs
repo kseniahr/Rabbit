@@ -15,8 +15,10 @@ public class Collectable : MonoBehaviour {
 	}
 	void OnTriggerEnter2D(Collider2D other){
 
-		Destroy(gameObject);
+		if (other.tag == "Player") {
 
+			Destroy (gameObject);
+		}
 	}
 
 }
