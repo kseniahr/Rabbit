@@ -109,16 +109,20 @@ public class MyRabit : MonoBehaviour {
 
 	}
 	void Die(){
+
+		GameControllScript.health -= 1;
+
+		if (GameControllScript.health <= 0) {
 		
-		myanim.SetTrigger ("die");
+			myanim.SetTrigger ("die");
 
 
-		myBody.isKinematic = true;
-		this.GetComponent<BoxCollider2D>().enabled = true;
+			myBody.isKinematic = true;
+			this.GetComponent<BoxCollider2D> ().enabled = true;
 
 
-		StartCoroutine (hideMeLater());
-
+			StartCoroutine (hideMeLater ());
+		}
 
 
 	}

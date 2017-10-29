@@ -4,13 +4,18 @@ using UnityEngine;
 
 public class Fruit : Collectable {
 
-	// Use this for initialization
-	void Start () {
-		
+
+	public UILabel fruitLabel;
+	public float fruits_quantity = 0f;
+	public float fruits_am = 10f;
+
+
+	void OnTriggerEnter2D(Collider2D other){
+
+		if (other.tag == "Player") {
+			fruits_quantity = fruits_quantity + 1; 
+			fruitLabel.text = fruits_quantity.ToString() + "/" + "10" ;
+		}
 	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+
 }

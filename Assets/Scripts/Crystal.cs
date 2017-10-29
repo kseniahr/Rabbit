@@ -4,13 +4,28 @@ using UnityEngine;
 
 public class Crystal : Collectable {
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
+
+	void OnTriggerEnter2D(Collider2D other){
+
+		if (other.tag == "Player" && gameObject.tag == "blue") {
+
+			Destroy (this.gameObject);
+			CrystalController.crystals_blue += 1;
+
+		}
+		if (other.tag == "Player" && gameObject.tag == "green") {
+
+			Destroy (this.gameObject);
+			CrystalController.crystals_green += 1;
+
+		}
+
+		if (other.tag == "Player" && gameObject.tag == "red") {
+
+			Destroy (this.gameObject);
+			CrystalController.crystals_red += 1;
+
+		}
+
 	}
 }
