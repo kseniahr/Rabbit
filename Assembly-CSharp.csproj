@@ -46,6 +46,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\DoorAdds.cs" />
      <Compile Include="Assets\Libraries\GUI\Scripts\Interaction\EnvelopContent.cs" />
      <Compile Include="Assets\Libraries\GUI\Scripts\Interaction\LanguageSelection.cs" />
      <Compile Include="Assets\Libraries\GUI\Scripts\Interaction\TypewriterEffect.cs" />
@@ -164,11 +165,16 @@
      <Compile Include="Assets\Scripts\Crystal.cs" />
      <Compile Include="Assets\Scripts\CrystalController.cs" />
      <Compile Include="Assets\Scripts\DeathHere.cs" />
+     <Compile Include="Assets\Scripts\Door.cs" />
      <Compile Include="Assets\Scripts\Fruit.cs" />
+     <Compile Include="Assets\Scripts\FruitControll.cs" />
+     <Compile Include="Assets\Scripts\GameCntrl.cs" />
      <Compile Include="Assets\Scripts\GameControllScript.cs" />
+     <Compile Include="Assets\Scripts\GameStatistics.cs" />
      <Compile Include="Assets\Scripts\GreenOrc.cs" />
      <Compile Include="Assets\Scripts\HeroFollow.cs" />
      <Compile Include="Assets\Scripts\LevelController.cs" />
+     <Compile Include="Assets\Scripts\LevelStat.cs" />
      <Compile Include="Assets\Scripts\MainMenu.cs" />
      <Compile Include="Assets\Scripts\MovingPlatform.cs" />
      <Compile Include="Assets\Scripts\Mushroom.cs" />
@@ -176,7 +182,11 @@
      <Compile Include="Assets\Scripts\MyRabit.cs" />
      <Compile Include="Assets\Scripts\Orc.cs" />
      <Compile Include="Assets\Scripts\ParallaxLayer.cs" />
+     <Compile Include="Assets\Scripts\PopUpBase.cs" />
      <Compile Include="Assets\Scripts\RabitLevel.cs" />
+     <Compile Include="Assets\Scripts\SettingsPopUP.cs" />
+     <Compile Include="Assets\Scripts\SoundManager.cs" />
+     <Compile Include="Assets\Scripts\WinnerPopUp.cs" />
      <None Include="Assets\Libraries\GUI\Resources\Shaders\Unlit - Transparent Masked 1.shader" />
      <None Include="Assets\Libraries\GUI\Resources\Shaders\Unlit - Text 2.shader" />
      <None Include="Assets\Libraries\GUI\Resources\Shaders\Unlit - Transparent Masked 2.shader" />

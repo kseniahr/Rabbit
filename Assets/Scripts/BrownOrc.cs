@@ -4,10 +4,17 @@ using UnityEngine;
 
 public class BrownOrc : MonoBehaviour {
 
-
+	GameObject player;
 	public float speed = 1;
 	Rigidbody2D myBody = null;
 	public static BrownOrc lastOrc;
+
+	public AudioClip attackSound = null;
+	AudioSource attackSource = null;
+	public AudioClip orcSound = null;
+	AudioSource orcSource = null;
+	public AudioClip dieSound = null;
+	AudioSource dieSource = null;
 
 	Animator myanim;
 
@@ -27,9 +34,18 @@ public class BrownOrc : MonoBehaviour {
 	}
 
 	void Start () {
+		player = GameObject.FindGameObjectWithTag ("Player");
 		myBody = this.GetComponent<Rigidbody2D>();
 		myanim = this.GetComponent<Animator> ();
 		myanim.speed = 0.3f;
+
+		attackSource = gameObject.AddComponent<AudioSource> ();
+		attackSource.clip = attackSound;
+		orcSource = gameObject.AddComponent<AudioSource> ();
+		orcSource.clip = orcSound;
+		dieSource = gameObject.AddComponent<AudioSource> ();
+		dieSource.clip = dieSound;
+		orcSource.Play ();
 
 	}
 
@@ -37,6 +53,7 @@ public class BrownOrc : MonoBehaviour {
 
 		SpriteRenderer sr = GetComponent<SpriteRenderer> ();
 		float value = this.getDirection();
+	
 
 		if (Mathf.Abs (value) > 0) {
 			Vector2 vel = myBody.velocity;
@@ -51,12 +68,16 @@ public class BrownOrc : MonoBehaviour {
 	}
 
 	void Update(){
+
+		if(player != null){
+		
 		Vector3 rabit_pos = MyRabit.lastRabit.transform.position;
 
 		if (mode == Mode.Attack) {
 
 			if (timeTillNextAttack < 0) {
 				timeTillNextAttack = timeBetweenFires;
+				attackSource.Play ();
 				if (this.transform.position.x > rabit_pos.x) {
 					
 					ShootCarrotLeft();
@@ -69,10 +90,11 @@ public class BrownOrc : MonoBehaviour {
 
 		}
 	}
+	}
 
 
 	void ShootCarrotRight(){
-		SpriteRenderer sr = GetComponent<SpriteRenderer> ();
+		
 		float my_posX = this.transform.position.x + carrotDistance;
 	
 		float my_posY = this.transform.position.y + 0.5f;
@@ -84,7 +106,7 @@ public class BrownOrc : MonoBehaviour {
 
 
 	void ShootCarrotLeft(){
-		SpriteRenderer sr = GetComponent<SpriteRenderer> ();
+
 		float my_posX = this.transform.position.x - carrotDistance;
 
 		float my_posY = this.transform.position.y + 0.5f;
@@ -114,7 +136,11 @@ public class BrownOrc : MonoBehaviour {
 	IEnumerator hideMeLater(){
 
 		yield return new WaitForSeconds (2);
-		Destroy (this.gameObject);
+		if (gameObject != null)
+		{    
+			Destroy(this.gameObject);
+		} 
+
 	}
 
 
@@ -170,43 +196,47 @@ public class BrownOrc : MonoBehaviour {
 
 	float getDirection() {
 
-		Vector3 my_pos = this.transform.position;
-		Vector3 rabit_pos = MyRabit.lastRabit.transform.position;
+		if (player != null) {
+
+			Vector3 my_pos = this.transform.position;
+			Vector3 rabit_pos = MyRabit.lastRabit.transform.position;
 
 
-		if (ShouldPatrolAB ()) {
-			if (mode == Mode.GoToA) {
-				if (isArrived (my_pos, pointA)) {
-					mode = Mode.GoToB;
-					return 1;
-				} else {
-					return -1;
-				}
-			} else if (mode == Mode.GoToB) {
-				if (isArrived (my_pos, pointB)) {
-					mode = Mode.GoToA;
-					return -1;
-				} else {
-					return 1;
-				}
-			} else
-				return 0;
+			if (ShouldPatrolAB ()) {
+				if (mode == Mode.GoToA) {
+					if (isArrived (my_pos, pointA)) {
+						mode = Mode.GoToB;
+						return 1;
+					} else {
+						return -1;
+					}
+				} else if (mode == Mode.GoToB) {
+					if (isArrived (my_pos, pointB)) {
+						mode = Mode.GoToA;
+						return -1;
+					} else {
+						return 1;
+					}
+				} else
+					return 0;
 
 
-		} else {
-			SpriteRenderer sr = GetComponent<SpriteRenderer> ();
-			if (my_pos.x < rabit_pos.x) {
-				
-				sr.flipX = true;
-				return 1;
 			} else {
-				sr.flipX = false;
-				return -1;
+				SpriteRenderer sr = GetComponent<SpriteRenderer> ();
+				if (my_pos.x < rabit_pos.x) {
+				
+					sr.flipX = true;
+					return 1;
+				} else {
+					sr.flipX = false;
+					return -1;
+				}
 			}
-		}
 
 
+		} return 0;
 	}
+
 }
 
 

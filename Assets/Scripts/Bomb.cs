@@ -13,16 +13,11 @@ public class Bomb : MonoBehaviour {
 		if (collider.tag == "Player") {
 
 			if (collider.transform.localScale == new Vector3 (1.0f, 1.0f, 1.0f)) {
-				
-				rabit_an.SetBool ("die", true);
-
-				Destroy (gameObject);
 
 				if (rabit != null){		
 					
 
-					LevelController.current.RabitOnDeath(rabit);
-					rabit_an.SetBool ("die", false);
+					MyRabit.lastRabit.Die ();
 
 				}
 

@@ -4,9 +4,12 @@ using UnityEngine;
 
 public class Collectable : MonoBehaviour {
 
-	// Use this for initialization
+	public AudioClip pickupSound = null;
+	AudioSource pickupSource = null;
+
 	void Start () {
-		
+		pickupSource = gameObject.AddComponent<AudioSource> ();
+		pickupSource.clip = pickupSound;
 	}
 	
 	// Update is called once per frame
@@ -15,10 +18,6 @@ public class Collectable : MonoBehaviour {
 	}
 	void OnTriggerEnter2D(Collider2D other){
 
-		if (other.tag == "Player") {
-
-			Destroy (gameObject);
-		}
 	}
 
 }

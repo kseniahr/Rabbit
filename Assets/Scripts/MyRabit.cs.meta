@@ -1,10 +1,12 @@
 fileFormatVersion: 2
 guid: 0245ea1bd0e89994dbfc21b3b27c27f1
-timeCreated: 1504611500
+timeCreated: 1510236631
 licenseType: Free
 MonoImporter:
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - walkSound: {fileID: 8300000, guid: 0d024189a711c440997b2d9f341c8dd0, type: 3}
+  - WinUI: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

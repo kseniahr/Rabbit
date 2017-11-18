@@ -1,12 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
 public class MyRabit : MonoBehaviour {
 
 // стрибки, зупинка платформи
 	public static MyRabit lastRabit;
 
+	public AudioClip walkSound, dieSound;
+	public AudioSource walkSource, dieSource;
 	public float speed = 1;
 	Rigidbody2D myBody = null;
 	bool isGrounded = true;
@@ -17,26 +19,40 @@ public class MyRabit : MonoBehaviour {
 	Transform heroParent = null;
 	Animator myanim;
 	public LayerMask playerMask;
-
+	public int id;
 	public float hurtTime = 2;
+	public GameObject winPrefab;
+	private int coin;
+	public int fruit;
+	public UILabel countText;
 
+	public UILabel fruitText;
 
 	void Awake (){
 
 		lastRabit = this;
-
+		walkSource = gameObject.AddComponent<AudioSource> ();
+		walkSource.clip = walkSound;
+		dieSource = gameObject.AddComponent<AudioSource> ();
+		dieSource.clip = dieSound;
 	}
 	// Use this for initialization
 	void Start () {
+		
 		this.heroParent = this.transform.parent;
 		LevelController.current.SetStartingPosition (transform.position);
 		myBody = this.GetComponent<Rigidbody2D>();
 		myanim = this.GetComponent<Animator> ();
+		coin = 0;
+		SetCoinText ();
+		//SetFruitText ();
+
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		Jump ();
+
 		
 	}
 	static void SetNewParent(Transform obj, Transform new_parent){
@@ -108,12 +124,14 @@ public class MyRabit : MonoBehaviour {
 		} 
 
 	}
-	void Die(){
+	public void Die(){
+		dieSource.Play ();
 
 		GameControllScript.health -= 1;
 
 		if (GameControllScript.health <= 0) {
 		
+
 			myanim.SetTrigger ("die");
 
 
@@ -121,7 +139,9 @@ public class MyRabit : MonoBehaviour {
 			this.GetComponent<BoxCollider2D> ().enabled = true;
 
 
-			StartCoroutine (hideMeLater ());
+			StartCoroutine(hideMeLater());
+		
+
 		}
 
 
@@ -129,37 +149,43 @@ public class MyRabit : MonoBehaviour {
 
 	IEnumerator hideMeLater(){
 
-		yield return new WaitForSeconds (2);
-		Application.LoadLevel (Application.loadedLevel);
-	}
-
-
-
-
-
-
-
-
-
-
-
-		/* Animator myanimator = GetComponent<Animator> ();
-
-		myanimator.SetBool("die",true);
-		myBody.velocity = Vector2.zero;
-		LevelController.current.RabitOnDeath(this); 
-
-*/
-
-
-
+		yield return new WaitForSeconds(2);
+		if (gameObject != null)
+		{    
+			Destroy(gameObject);
+		} 
 	
+		LevelController.current.Lose ();
+	}
+		
+
+
 
 	void OnCollisionEnter2D (Collision2D collision){
 
 		if (collision.collider.tag == "weapon") {
 			Die ();
+
 		}
+
+		if (collision.collider.tag == "DoorWin") {
+			
+			//LevelController.current.Win();
+
+		}
+
+		if (collision.collider.tag == "Coin") {
+			coin++;
+			LevelController.current.addCoin ();
+			Destroy (collision.gameObject);
+			SetCoinText ();
+		}
+		if (collision.collider.tag == "Fruit") {
+			fruit = fruit + 1;
+			LevelController.current.addFruit (id);
+			//SetFruitText ();
+
+		}	
 
 		if (collision.gameObject.tag == "Orc1") {
 			GreenOrc gr_enemy = collision.collider.GetComponent<GreenOrc> ();
@@ -183,6 +209,7 @@ public class MyRabit : MonoBehaviour {
 
 
 				}
+
 			}
 		}
 
@@ -214,7 +241,15 @@ public class MyRabit : MonoBehaviour {
 
 	}
 
-		
+	
+	void SetCoinText(){
+		countText.text = "000" + coin.ToString ();
+	}	
+
+	/*void SetFruitText (){
+		fruitText.text = fruit.ToString() + "/" + "6" ;
+
+	} */
 	void FixedUpdate (){
 		
 		float value = Input.GetAxis ("Horizontal");
@@ -223,14 +258,25 @@ public class MyRabit : MonoBehaviour {
 	
 
 		if (Mathf.Abs (value) > 0) {
+			if (!walkSource.isPlaying && SoundManager.Instance.isSoundOn ()) {
+
+				walkSource.Play ();
+			}
 			animatorrab.SetBool("run", true);
 			Vector2 vel = myBody.velocity;
 			vel.x = value * speed;
 			myBody.velocity = vel;
+
 		}
+
 		if (Mathf.Abs (value) == 0) {
+			if (walkSource.isPlaying) {
+
+				walkSource.Pause ();
+			}
 			animatorrab.SetBool ("run", false);
 		}
+
 		if (value < 0) {
 			sr.flipX = true;
 		} else if (value > 0) {

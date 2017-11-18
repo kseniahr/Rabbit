@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class RabitLevel : MonoBehaviour {
-
+	
 	public float speed = 3;
 	Rigidbody2D myBody = null;
 	bool isGrounded = true;
@@ -25,6 +25,7 @@ public class RabitLevel : MonoBehaviour {
 		LevelController.current.SetStartingPosition (transform.position);
 		myBody = this.GetComponent<Rigidbody2D>();
 		myanim = this.GetComponent<Animator> ();
+		
 	}
 
 	// Update is called once per frame
@@ -94,12 +95,11 @@ public class RabitLevel : MonoBehaviour {
 	void OnCollisionEnter2D (Collision2D collision){
 
 		if (collision.collider.tag == "door1") {
-			Debug.Log ("enter new level");
-			SceneManager.LoadScene ("3");
+			SceneManager.LoadScene ("1");
 		}
 
 		if (collision.collider.tag == "door2") {
-			SceneManager.LoadScene ("3");
+			SceneManager.LoadScene ("2");
 		}
 
 	}

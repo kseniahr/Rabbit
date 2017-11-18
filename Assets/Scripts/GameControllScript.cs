@@ -45,7 +45,6 @@ public class GameControllScript : MonoBehaviour {
 			heart1.gameObject.SetActive (false);
 			heart2.gameObject.SetActive (false);
 			heart3.gameObject.SetActive (false);
-			SceneManager.LoadScene ("ChooseLevel");
 			break;
 
 		}

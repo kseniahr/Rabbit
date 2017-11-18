@@ -1,16 +1,20 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Collectable.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\LevelController.cs">
     <Files>
+      <File FileName="Assets\Scripts\GameCntrl.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\MyButton.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\MainMenu.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Orc.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\RabitLevel.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Collectable.cs" Line="22" Column="3" />
-      <File FileName="Assets\Scripts\MyRabit.cs" Line="245" Column="1" />
-      <File FileName="Assets\Scripts\GameControllScript.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Crystal.cs" Line="26" Column="40" />
-      <File FileName="Assets\Scripts\CrystalController.cs" Line="11" Column="32" />
+      <File FileName="Assets\Scripts\MyRabit.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Collectable.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\LevelController.cs" Line="92" Column="62" />
+      <File FileName="Assets\Scripts\Crystal.cs" Line="1" Column="1" />
+      <File FileName="Assets\SoundManager.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\GreenOrc.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\BrownOrc.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\DeathHere.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Bomb.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Fruit.cs" Line="6" Column="2" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

@@ -7,26 +7,26 @@ public class Carrot : MonoBehaviour {
 	public float speed = 1.0f;
 	public float lifetime = 2.0f;
 	public int damage = 1;
-
+	GameObject enemy;
+	GameObject player;
 
 	// Use this for initialization
 	void Start () {
 		Destroy (gameObject, lifetime);
-
+		enemy = GameObject.FindGameObjectWithTag ("Orc2");
+		player = GameObject.FindGameObjectWithTag ("Player");
 	}
-
-
-
-	// Update is called once per frame
+		
 	void Update () {
+
+		if(enemy != null && player != null){
 		Vector3 rabit_pos = MyRabit.lastRabit.transform.position;
 		SpriteRenderer sr = GetComponent<SpriteRenderer> ();
 
-			Vector3 orc_pos = BrownOrc.lastOrc.transform.position;
+		Vector3 orc_pos = BrownOrc.lastOrc.transform.position;
 		
-
-		if (rabit_pos.x < orc_pos.x) {
-			
+		
+		if (rabit_pos.x < orc_pos.x) {			
 			sr.flipX = true;
 			transform.Translate (Vector3.left * Time.deltaTime * speed);
 		}
@@ -36,6 +36,7 @@ public class Carrot : MonoBehaviour {
 			sr.flipX = false;
 			transform.Translate (Vector3.right * Time.deltaTime * speed);
 		}
+	}
 	}
 
 	void FixedUpdate () {

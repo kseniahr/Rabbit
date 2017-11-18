@@ -3,24 +3,37 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class GreenOrc : MonoBehaviour {
-
+	
+	GameObject player;
 
 	public float speed = 1;
 	Rigidbody2D myBody = null;
 
 	Animator myanim;
-
+	public AudioClip orcSound = null;
+	AudioSource orcSource = null;
+	public AudioClip dieSound = null;
+	AudioSource dieSource = null;
 	public Vector3 pointA;
 	public Vector3 pointB;
 
 	void Start () {
+		player = GameObject.FindGameObjectWithTag ("Player");
 		myBody = this.GetComponent<Rigidbody2D>();
 		myanim = this.GetComponent<Animator> ();
 		myanim.speed = 0.3f;
 
+		orcSource = gameObject.AddComponent<AudioSource> ();
+		orcSource.clip = orcSound;
+		dieSource = gameObject.AddComponent<AudioSource> ();
+		dieSource.clip = dieSound;
+		orcSource.Play ();
+	
 	}
 
 	void FixedUpdate () {
+		
+	
 
 		SpriteRenderer sr = GetComponent<SpriteRenderer> ();
 		float value = this.getDirection();
@@ -44,14 +57,14 @@ public class GreenOrc : MonoBehaviour {
 
 		myBody.isKinematic = true;
 		this.GetComponent<BoxCollider2D> ().enabled = true;
-
+		dieSource.Play ();
 		StartCoroutine (hideMeLater());
 
 
 	}
 
 	IEnumerator hideMeLater(){
-
+		
 		yield return new WaitForSeconds (2);
 		Destroy (this.gameObject);
 	}
@@ -106,41 +119,46 @@ public class GreenOrc : MonoBehaviour {
 	}
 
 	float getDirection() {
+		
+		if (player != null) {
 
-		Vector3 my_pos = this.transform.position;
-		Vector3 rabit_pos = MyRabit.lastRabit.transform.position;
+			Vector3 my_pos = this.transform.position;
 
-
-		if (ShouldPatrolAB ()) {
-			if (mode == Mode.GoToA) {
-				if (isArrived (my_pos, pointA)) {
-					mode = Mode.GoToB;
-					return 1;
-				} else {
-					return -1;
-				}
-			} else if (mode == Mode.GoToB) {
-				if (isArrived (my_pos, pointB)) {
-					mode = Mode.GoToA;
-					return -1;
-				} else {
-					return 1;
-				}
-			} else
-				return 0;
+			Vector3 rabit_pos = MyRabit.lastRabit.transform.position;
 
 
-		} else {
+			if (ShouldPatrolAB ()) {
+				if (mode == Mode.GoToA) {
+					if (isArrived (my_pos, pointA)) {
+						mode = Mode.GoToB;
+						return 1;
+					} else {
+						return -1;
+					}
+				} else if (mode == Mode.GoToB) {
+					if (isArrived (my_pos, pointB)) {
+						mode = Mode.GoToA;
+						return -1;
+					} else {
+						return 1;
+					}
+				} else
+					return 0;
 
-			if (my_pos.x < rabit_pos.x) {
 
-				return 1;
 			} else {
-				return -1;
+
+				if (my_pos.x < rabit_pos.x) {
+
+					return 1;
+				} else {
+					return -1;
+				}
 			}
+
+
 		}
-
-
+		return 0;
 	}
 }
 
