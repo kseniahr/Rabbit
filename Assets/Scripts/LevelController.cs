@@ -24,6 +24,7 @@ public class LevelController : MonoBehaviour {
 	public GameObject WinUI;
 	public GameObject LoseUI;
 	public GameObject PauseUI;
+	public GameObject NoMusic;
 
 
 	public AudioClip winSound = null;
@@ -36,7 +37,8 @@ public class LevelController : MonoBehaviour {
 		current = this;
 	}
 
-	void Start() {		
+	void Start() {	
+		NoMusic.SetActive (false);	
 		PauseUI.SetActive(false);
 		isPaused = false;
 		WinUI.SetActive (false);
@@ -114,6 +116,7 @@ public class LevelController : MonoBehaviour {
 		if (muted) {
 
 			AudioListener.volume = 0;
+
 		} else {
 			AudioListener.volume = 1;
 		}
@@ -160,6 +163,10 @@ public class LevelController : MonoBehaviour {
 	public void Mute(){
 
 		muted = !muted;
+		if (muted)
+			NoMusic.SetActive (true);
+		if (!muted)
+			NoMusic.SetActive (false);
 	}
 
 

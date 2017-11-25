@@ -11,7 +11,7 @@ public class FruitControll : MonoBehaviour {
 
 	public UILabel fruitsLabel;
 
-	public int totalFruits = 6;
+	public int totalFruits = 10;
 
 	public void addFruit(int fruitId){
 		this.collectedFruits.Add (fruitId);
@@ -34,7 +34,7 @@ public class FruitControll : MonoBehaviour {
 
 	void Update(){
 		
-		fruitsLabel.text = this.collectedFruits.Count.ToString () + " / 6";
+		fruitsLabel.text = this.collectedFruits.Count.ToString () + " / 10";
 
 	}
 

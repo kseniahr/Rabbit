@@ -30,6 +30,11 @@ public class WinnerPopUp : MonoBehaviour {
 		SceneManager.LoadScene("MainMenu");
 	}
 
+	public void NextLevel(){
+
+		SceneManager.LoadScene("2");
+	}
+
 	public void ChooseLevel(){
 
 		SceneManager.LoadScene("ChooseLevel");

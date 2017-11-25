@@ -46,7 +46,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\DoorAdds.cs" />
+     <Compile Include="Assets\Heart.cs" />
      <Compile Include="Assets\Libraries\GUI\Scripts\Interaction\EnvelopContent.cs" />
      <Compile Include="Assets\Libraries\GUI\Scripts\Interaction\LanguageSelection.cs" />
      <Compile Include="Assets\Libraries\GUI\Scripts\Interaction\TypewriterEffect.cs" />
@@ -166,6 +166,7 @@
      <Compile Include="Assets\Scripts\CrystalController.cs" />
      <Compile Include="Assets\Scripts\DeathHere.cs" />
      <Compile Include="Assets\Scripts\Door.cs" />
+     <Compile Include="Assets\Scripts\DoorAdds.cs" />
      <Compile Include="Assets\Scripts\Fruit.cs" />
      <Compile Include="Assets\Scripts\FruitControll.cs" />
      <Compile Include="Assets\Scripts\GameCntrl.cs" />
